@@ -1,5 +1,6 @@
 use std::io::stdin;
 use caja_supermercado::compra::{Item, agregar_item, quitar_item, mostrar_items, total_compra};
+use caja_supermercado::pago::{MetodoDePago, ResultadoPago, pagar};
 fn mostrar_menu() {
     println!("OPCIONES: ");
     println!("1. Agregar Item");
