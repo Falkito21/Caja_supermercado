@@ -9,9 +9,9 @@ pub mod pago
 
     pub struct ResultadoPago 
     {
-        metodo_pago: String //La descripcion del metodo de pago 
-        ,fue_exitoso: bool // true si el pago se pudo hacer o false sino
-        ,cambio: f32 //cambio a devolver al cliente
+        pub metodo_pago: String //La descripcion del metodo de pago 
+        ,pub fue_exitoso: bool // true si el pago se pudo hacer o false sino
+        ,pub cambio: f32 //cambio a devolver al cliente
     }
 
     pub fn pagar(metodo_de_pago: MetodoDePago, monto_a_pagar: f32, recibido_del_cliente: f32, tarjeta: &str) -> ResultadoPago
@@ -83,6 +83,7 @@ pub mod pago
 
 pub mod compra 
 {
+    use crate::pago;
     #[derive(Debug)]
     pub struct Item 
     {
@@ -127,5 +128,20 @@ pub mod compra
         total_compra = (total_compra * y).round() / y;
 
         total_compra
+    }
+
+    pub fn pagar_compra(metodo_de_pago: pago::MetodoDePago, monto_a_pagar: f32, recibido_del_cliente: f32, tarjeta: &str) -> pago::ResultadoPago
+    {
+        //El parametro metodo_de_pago es la forma de pago elegida por el cliente 
+        // monto_a_pagar es el total a pagar de la compra 
+        // recibido_del_cliente si el pago es en efectivo o por transferencia, no es necesario
+        // tarjeta, es el numero de tarjeta del cliente
+
+        // dependiendo del metodo de pago elegido por el cliente, invocamos las funciones privadas
+        // lo podemos hacer ya que estamos dentro del mismo alcance del metodo 
+        
+        let resultado = pago::pagar(metodo_de_pago, monto_a_pagar, recibido_del_cliente, tarjeta); 
+
+        resultado
     }
 }
